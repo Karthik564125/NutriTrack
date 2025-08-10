@@ -1,0 +1,294 @@
+/* Enhanced Diet Page Glassmorphism Theme */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-color: #ffffff;
+  --accent-color: #51cf66;
+  --accent-hover: #2f9e44;
+  --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --highlight: rgba(81, 207, 102, 0.15);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--glass-bg);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--box-shadow);
+  color: var(--text-color);
+  border-radius: 0 0 12px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  letter-spacing: 1px;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.chat-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(238, 90, 36, 0.3);
+}
+
+.chat-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(238, 90, 36, 0.4);
+}
+
+.nav-btn, .logout-btn {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(81, 207, 102, 0.35);
+}
+
+.nav-btn:hover, .logout-btn:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.logout-btn {
+  background-color: #f44336;
+  box-shadow: 0 6px 12px rgba(244, 67, 54, 0.3);
+}
+
+/* Glass containers */
+.glass-box {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: blur(15px);
+  animation: fadeInUp 0.7s ease forwards;
+  opacity: 0;
+  margin: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(81, 207, 102, 0.3);
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Streak */
+.streak-box {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.streak-days {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.streak-day {
+  width: 45px;
+  height: 45px;
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(81, 207, 102, 0.4);
+}
+
+.streak-day:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.1);
+}
+
+.streak-day.missed {
+  background-color: #f44336;
+}
+
+/* Plan content sections */
+.plan-box, .nutrients-box, .supplement-box, .lifestyle-box {
+  margin-top: 2rem;
+  background-color: var(--highlight);
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.plan-box .day-section {
+  margin-bottom: 2rem;
+}
+
+.plan-box h3,
+.nutrients-box h3,
+.supplement-box h3,
+.lifestyle-box h3 {
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 0.4rem;
+  font-size: 1.4rem;
+}
+
+.meal-item {
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent-color);
+  margin-bottom: 0.8rem;
+  transition: background 0.3s ease;
+}
+
+.meal-item h4 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.05rem;
+}
+
+.meal-item:hover {
+  background-color: rgba(81, 207, 102, 0.1);
+  border-left-color: var(--accent-hover);
+}
+
+/* Lifestyle Tips */
+.tip-item {
+  margin-top: 0.6rem;
+  line-height: 1.7;
+  color: #e0f2f1;
+  font-size: 1rem;
+}
+.lottie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.2rem;
+  justify-items: center;
+}
+
+.lottie-card {
+  width: 200px;
+  height: 240px;
+  padding: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.lottie-card:hover {
+  transform: scale(1.05);
+}
+
+.exercise-info {
+  font-size: 0.9rem;
+  color: #00ffd5;
+  margin-top: 0.3rem;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .glass-box {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-actions {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .streak-days {
+    flex-wrap: wrap;
+  }
+
+  .nav-btn, .logout-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .lottie-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .lottie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .lottie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
