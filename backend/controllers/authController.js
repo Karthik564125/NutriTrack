@@ -11,12 +11,16 @@ export const signup = async (req, res) => {
     const sql = 'INSERT INTO users (name, username, email, password, dob, gender) VALUES (?, ?, ?, ?, ?, ?)';
     await db.execute(sql, [name, username, email, hashedPassword, dob, gender]);
 
-    // Send welcome email
-    await sendEmail(
-      email,
-      'Welcome to Our App!',
-      `Hi ${name},\n\nThank you for signing up to our app!`
-    );
+    // Send welcome email (non-blocking for production reliability)
+    try {
+      await sendEmail(
+        email,
+        'Welcome to Our App!',
+        `Hi ${name},\n\nThank you for signing up to our app!`
+      );
+    } catch (emailError) {
+      console.error('Email send failed (non-fatal):', emailError);
+    }
 
     res.status(201).json({ message: 'Signup successful, email sent' });
   } catch (error) {
