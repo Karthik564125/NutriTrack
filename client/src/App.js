@@ -14,7 +14,15 @@ const App = () => {
 
   useEffect(() => {
     const stored = localStorage.getItem('user');
-    if (stored) setUser(JSON.parse(stored));
+    if (!stored || stored === 'undefined' || stored === 'null') {
+      localStorage.removeItem('user');
+      return;
+    }
+    try {
+      setUser(JSON.parse(stored));
+    } catch (e) {
+      localStorage.removeItem('user');
+    }
   }, []);
 
   // Reset BMI data when user changes (prevents leakage)
