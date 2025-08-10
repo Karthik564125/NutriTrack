@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../api';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -47,7 +48,7 @@ const AuthPage = ({ setUser }) => {
     if (form === 'signup' && !validateInputs()) return;
 
     try {
-      const url = form === 'login' ? '/api/auth/login' : '/api/auth/signup';
+      const url = form === 'login' ? apiUrl('/api/auth/login') : apiUrl('/api/auth/signup');
       const payload =
         form === 'login'
           ? { username: formData.username, password: formData.password }

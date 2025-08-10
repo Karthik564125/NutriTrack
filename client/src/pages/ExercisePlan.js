@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import HealthChat from './components/HealthChat';
+import { apiUrl } from '../api';
 import './diet.css';
 
 // Import all 10 Lottie JSON files
@@ -33,7 +34,7 @@ const ExercisePlan = ({ user }) => {
   const fetchStreak = useCallback(async () => {
     try {
       console.log(`Fetching streak for user ${user.id}`);
-      const response = await fetch(`http://localhost:5000/api/streaks/${user.id}/exercise`);
+      const response = await fetch(apiUrl(`/api/streaks/${user.id}/exercise`));
       console.log('Response status:', response.status);
       
       if (!response.ok) {
@@ -73,7 +74,7 @@ const markDone = async () => {
     setUpdateLoading(true);
     setUpdateError('');
     try {
-      const response = await fetch(`http://localhost:5000/api/streaks/${user.id}/exercise/update`, {
+      const response = await fetch(apiUrl(`/api/streaks/${user.id}/exercise/update`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -94,7 +95,7 @@ const markDone = async () => {
     setUpdateLoading(true);
     setUpdateError('');
     try {
-      const response = await fetch(`http://localhost:5000/api/streaks/${user.id}/exercise/reset`, {
+      const response = await fetch(apiUrl(`/api/streaks/${user.id}/exercise/reset`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -111,7 +112,7 @@ const markDone = async () => {
     setLoading(true);
     setAiWorkout('');
     try {
-      const res = await fetch('http://localhost:5000/api/ai/generate-exercise', {
+      const res = await fetch(apiUrl('/api/ai/generate-exercise'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bmiCategory: category }),

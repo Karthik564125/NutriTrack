@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HealthChat from './components/HealthChat';
 import './home.css';
+import { apiUrl } from '../api';
 
 const Home = ({ user, setUser, bmiData, setBmiData }) => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
   const fetchLatestBMI = useCallback(async () => {
     if (!user?.id) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/bmi/latest/${user.id}`);
+      const response = await fetch(apiUrl(`/api/bmi/latest/${user.id}`));
       const data = await response.json();
       if (response.ok && data) {
         const bmiResult = {
@@ -41,11 +42,11 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
 const fetchStreaks = useCallback(async () => {
   if (!user?.id) return;
   try {
-    const exRes = await fetch(`http://localhost:5000/api/streaks/${user.id}/exercise`);
+    const exRes = await fetch(apiUrl(`/api/streaks/${user.id}/exercise`));
     const exData = await exRes.json();
     setExerciseStreak(exData.currentStreak || 0);
 
-    const dietRes = await fetch(`http://localhost:5000/api/streaks/${user.id}/diet`);
+    const dietRes = await fetch(apiUrl(`/api/streaks/${user.id}/diet`));
     const dietData = await dietRes.json();
     setDietStreak(dietData.currentStreak || 0);
   } catch (err) {
@@ -60,7 +61,7 @@ const fetchStreaks = useCallback(async () => {
   const updateStreak = async (type) => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/streaks/${user.id}/${type}/update`, {
+      const res = await fetch(apiUrl(`/api/streaks/${user.id}/${type}/update`), {
         method: 'POST'
       });
       const data = await res.json();
@@ -141,7 +142,7 @@ const fetchStreaks = useCallback(async () => {
     localStorage.setItem('dietType', dietType);
 
     try {
-      await fetch('http://localhost:5000/api/bmi/save', {
+      await fetch(apiUrl('/api/bmi/save'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './healthChat.css';
+import { apiUrl } from '../../api';
 
 const HealthChat = ({ user, onClose }) => {
   const [messages, setMessages] = useState([]);
@@ -24,7 +25,7 @@ const HealthChat = ({ user, onClose }) => {
 
   const loadChatHistory = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/ai/chat-history/${user.id}`);
+      const response = await fetch(apiUrl(`/api/ai/chat-history/${user.id}`));
       const data = await response.json();
       
       if (data.history && data.history.length > 0) {
@@ -63,7 +64,7 @@ const HealthChat = ({ user, onClose }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/ai/health-chat', {
+      const response = await fetch(apiUrl('/api/ai/health-chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

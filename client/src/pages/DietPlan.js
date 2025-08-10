@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HealthChat from './components/HealthChat';
+import { apiUrl } from '../api';
 import './diet.css';
 
 const DietPlan = ({ user }) => {
@@ -28,7 +29,7 @@ const DietPlan = ({ user }) => {
   const fetchStreak = useCallback(async () => {
     try {
       console.log(`Fetching streak for user ${user.id}`);
-      const response = await fetch(`http://localhost:5000/api/streaks/${user.id}/diet`);
+      const response = await fetch(apiUrl(`/api/streaks/${user.id}/diet`));
       console.log('Response status:', response.status);
       
       if (!response.ok) {
@@ -73,7 +74,7 @@ const DietPlan = ({ user }) => {
   setUpdateError('');
 
   try {
-    const response = await fetch(`http://localhost:5000/api/streaks/${user.id}/diet/update`, {
+    const response = await fetch(apiUrl(`/api/streaks/${user.id}/diet/update`), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     });
@@ -103,7 +104,7 @@ const DietPlan = ({ user }) => {
     setUpdateLoading(true);
     setUpdateError('');
     try {
-      const response = await fetch(`http://localhost:5000/api/streaks/${user.id}/diet/reset`, {
+      const response = await fetch(apiUrl(`/api/streaks/${user.id}/diet/reset`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -120,7 +121,7 @@ const DietPlan = ({ user }) => {
     setLoadingAi(true);
     setAiPlan('');
     try {
-      const res = await fetch('http://localhost:5000/api/ai/generate-diet', {
+      const res = await fetch(apiUrl('/api/ai/generate-diet'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
