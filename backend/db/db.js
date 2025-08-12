@@ -5,13 +5,24 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Support both custom env vars and Railway defaults
+// Support both Railway defaults and optional custom env vars (prefer Railway)
+let selectedHost = process.env.MYSQLHOST || process.env.DB_HOST;
+let selectedUser = process.env.MYSQLUSER || process.env.DB_USER;
+let selectedPassword = process.env.MYSQLPASSWORD || process.env.DB_PASSWORD;
+let selectedDatabase = process.env.MYSQLDATABASE || process.env.DB_NAME;
+let selectedPort = Number(process.env.MYSQLPORT || process.env.DB_PORT || 3306);
+
+// Guard against localhost accidentally set in envs on Render
+if ((selectedHost === 'localhost' || selectedHost === '127.0.0.1') && process.env.MYSQLHOST) {
+  selectedHost = process.env.MYSQLHOST;
+}
+
 const dbConfig = {
-  host: process.env.DB_HOST || process.env.MYSQLHOST,
-  user: process.env.DB_USER || process.env.MYSQLUSER,
-  password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
-  database: process.env.DB_NAME || process.env.MYSQLDATABASE,
-  port: Number(process.env.DB_PORT || process.env.MYSQLPORT || 3306),
+  host: selectedHost,
+  user: selectedUser,
+  password: selectedPassword,
+  database: selectedDatabase,
+  port: selectedPort,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
