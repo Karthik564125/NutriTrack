@@ -21,7 +21,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
     try {
       const response = await fetch(apiUrl(`/api/bmi/latest/${user.id}`));
       const data = await response.json();
-      if (response.ok && data) {
+      if (response.ok && data && data.id) {
         const bmiResult = {
           bmi: data.bmi_value.toFixed(2),
           category: data.category
@@ -33,6 +33,9 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
         setWeight(data.weight);
         setWeightUnit(data.weight_unit);
         setDietType(data.diet_type);
+      } else {
+        // No previous record
+        setBmiData(null);
       }
     } catch (error) {
       console.error('Error fetching latest BMI:', error);
@@ -165,10 +168,12 @@ const fetchStreaks = useCallback(async () => {
   };
 
   const goToDiet = async () => {
+    await fetchStreaks();
     navigate('/diet');
   };
 
   const goToExercise = async () => {
+    await fetchStreaks();
     navigate('/exercise');
   };
 
@@ -254,7 +259,7 @@ const fetchStreaks = useCallback(async () => {
         <p><strong>🏃 Exercise Streak:</strong> {exerciseStreak} days</p>
       </>
     ) : (
-      <p>No previous BMI data found.</p>
+      <p>Start by entering your height and weight, then tap Calculate BMI.</p>
     )}
   </div>
 
