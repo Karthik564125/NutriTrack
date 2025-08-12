@@ -96,10 +96,8 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
   }, []);
 
   const handleLogout = () => {
-    if (user?.id) {
-      localStorage.removeItem(`bmiData_${user.id}`); // remove only this user’s cached BMI
-    }
-    localStorage.clear();
+    // Keep cached BMI and preferences so they reappear quickly on next login
+    localStorage.removeItem('user');
     setUser(null);
     setBmiData(null);
     navigate('/');
