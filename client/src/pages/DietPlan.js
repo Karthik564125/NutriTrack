@@ -68,36 +68,26 @@ const DietPlan = ({ user }) => {
   }, [user, fetchStreak]);
 
   const markDone = async () => {
-  if (doneToday) return; // Safety check
-
-  setUpdateLoading(true);
-  setUpdateError('');
-
-  try {
-    const response = await fetch(apiUrl(`/api/streaks/${user.id}/diet/update`), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    if (!response.ok) throw new Error('Failed to update streak');
-
-    const result = await response.json();
-
-    // ✅ Immediate visual feedback
-    setDoneToday(true);
-
-    if (result.message === 'Streak updated') {
-      setStreak(prev => prev + 1);
-      setLongestStreak(prev => Math.max(prev, streak + 1));
+    if (doneToday) return;
+    setUpdateLoading(true);
+    setUpdateError('');
+    try {
+      const response = await fetch(apiUrl(`/api/streaks/${user.id}/diet/update`), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (!response.ok) throw new Error('Failed to update streak');
+      const result = await response.json();
+      setDoneToday(true);
+      // Always refresh from server so counts are accurate
+      await fetchStreak();
+    } catch (error) {
+      console.error(error);
+      setUpdateError('Failed to update streak.');
+    } finally {
+      setUpdateLoading(false);
     }
-
-  } catch (error) {
-    console.error(error);
-    setUpdateError('Failed to update streak.');
-  } finally {
-    setUpdateLoading(false);
-  }
-};
+  };
 
 
   const resetStreak = async () => {

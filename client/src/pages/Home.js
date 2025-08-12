@@ -57,20 +57,7 @@ const fetchStreaks = useCallback(async () => {
 }, [user?.id]);
 
 
-  // Update streak (diet or exercise)
-  const updateStreak = async (type) => {
-    if (!user?.id) return;
-    try {
-      const res = await fetch(apiUrl(`/api/streaks/${user.id}/${type}/update`), {
-        method: 'POST'
-      });
-      const data = await res.json();
-      if (type === 'diet') setDietStreak(data.currentStreak || 0);
-      else setExerciseStreak(data.currentStreak || 0);
-    } catch (err) {
-      console.error(`Failed to update ${type} streak:`, err);
-    }
-  };
+  // Removed auto-update on navigation; users must explicitly mark done
 
  useEffect(() => {
   if (user?.id) {
@@ -178,12 +165,10 @@ const fetchStreaks = useCallback(async () => {
   };
 
   const goToDiet = async () => {
-    await updateStreak('diet');
     navigate('/diet');
   };
 
   const goToExercise = async () => {
-    await updateStreak('exercise');
     navigate('/exercise');
   };
 

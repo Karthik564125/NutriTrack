@@ -69,8 +69,8 @@ const ExercisePlan = ({ user }) => {
     }
   }, [user, fetchStreak]);
 
-const markDone = async () => {
-  if (!doneToday) {
+  const markDone = async () => {
+    if (doneToday) return;
     setUpdateLoading(true);
     setUpdateError('');
     try {
@@ -79,16 +79,14 @@ const markDone = async () => {
         headers: { 'Content-Type': 'application/json' }
       });
       if (!response.ok) throw new Error('Failed to update streak');
-
-      setDoneToday(true); // ✅ Show "Done for Today" instantly
-      await fetchStreak(); // Still refresh numbers from backend
+      setDoneToday(true);
+      await fetchStreak();
     } catch (error) {
       setUpdateError('Failed to update streak.');
     } finally {
       setUpdateLoading(false);
     }
-  }
-};
+  };
 
 
   const resetStreak = async () => {
@@ -181,10 +179,10 @@ const markDone = async () => {
 
       <div className="glass-box">
         <h2>🎞️ Workout Animations</h2>
-        <div className="lottie-grid">
+        <div className="lottie-grid lottie-grid--tight">
           {animations.map((ex, idx) => (
             <div className="lottie-card" key={idx}>
-              <Lottie animationData={ex.file} loop style={{ height: 120 }} />
+              <Lottie animationData={ex.file} loop style={{ width: '100%', height: 120 }} />
               <h4>{ex.title}</h4>
               <p className="exercise-info">{ex.sets} reps</p>
             </div>

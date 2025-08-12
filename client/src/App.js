@@ -28,7 +28,7 @@ const App = () => {
   // Reset BMI data when user changes (prevents leakage)
   useEffect(() => {
     setBmiData(null);
-  }, [user?.id]);
+  }, [user?.id, setBmiData]);
 
   const handleLogout = () => {
     setUser(null);
