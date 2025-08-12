@@ -182,7 +182,7 @@ const ExercisePlan = ({ user }) => {
       </div>
 
       <div className="glass-box">
-        <h2>🎞️ Workout Animations</h2>
+        <h2>🤸‍♀️ Basic Workout !!</h2>
         <div className="lottie-grid lottie-grid--tight">
           {animations.map((ex, idx) => (
             <div className="lottie-card" key={idx}>

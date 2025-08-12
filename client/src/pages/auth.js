@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiUrl } from '../api';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './auth.css';
@@ -81,118 +81,83 @@ const AuthPage = ({ setUser }) => {
 
   return (
     <div className="auth-wrapper">
-      <nav className="navbar">
-        <div className="logo" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src={process.env.PUBLIC_URL + '/logo.png'} alt="NutriTrack" style={{ height: 24, width: 24 }} />
-          <span>NutriTrack</span>
-        </div>
-        <Link to="/about" className="about-box">About Us</Link>
-      </nav>
 
       {!showAbout ? (
-        <div className="auth-container">
-          <div className="auth-box animated-fade">
-            <h2>{form === 'login' ? 'Login' : 'Signup'}</h2>
-            <form onSubmit={handleSubmit}>
-              {form === 'signup' && (
-                <>
-                  <input
-                    name="name"
-                    placeholder="Name"
-                    required
-                    onChange={handleChange}
-                    value={formData.name}
-                  />
-                  <input
-                    name="email"
-                    type="email"
-                    placeholder="Gmail Address"
-                    required
-                    onChange={handleChange}
-                    value={formData.email}
-                  />
-                  <input
-                    name="dob"
-                    type="date"
-                    required
-                    onChange={handleChange}
-                    value={formData.dob}
-                  />
-                  <select
-                    name="gender"
-                    required
-                    onChange={handleChange}
-                    value={formData.gender}
-                  >
+        <div className="auth-container auth-grid">
+          <div className="hero-box animated-fade">
+            <div className="hero-head">
+              <img className="hero-logo" src={process.env.PUBLIC_URL + '/logo.png'} alt="NutriTrack" />
+              <div>
+                <h2 className="hero-title">NutriTrack</h2>
+                <p className="hero-sub"> ➡️ Sign up / Sign in with your details and give your weight & height and start working out.</p>
+                <p className="hero-desc"> 🌐Easy to use and navigate , Simple and user friendly.</p>
+                <p className="hero-desc"> 💪Motivating streaks and progress tracking to keep you on track.</p>
+                <p className="hero-desc"> 🤖 Quick tips from our AI agent — anytime you need.</p>
+                <p className="hero-desc"> 🍳 Easy recipes and workouts designed for busy schedules.</p>
+                <p className="hero-desc"> 🍴 Have the best meal plan from our AI agent.</p>
+                <p className="hero-desc"> 🤸‍♀️Included beginner exercises to , All in one place.</p>
+                <p className="hero-desc"> 🎯 Start your health journey today , and see your progress.</p>
+              </div>
+            </div>
+           
+           {/* ➡️ Made By container */}
+<div className="hero-box animated-fade">
+  {/* ...all your hero content... */}
+  {/* "Made by" as a badge */}
+  <span className="made-by-badge">
+    Made by{' '}
+    <a
+      href="https://karthik564125.github.io/myportfolio/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Karthik
+    </a>
+  </span>
+</div>
+            
+            {/* inline explore removed */}
+          </div>
+          <div className="auth-card animated-fade">
+            <div className={`flip-card-inner ${form === 'signup' ? 'flipped' : ''}`}>
+              <div className="flip-face flip-login">
+                <h2>Login</h2>
+                <form onSubmit={handleSubmit}>
+                  <input name="username" placeholder="Username" required onChange={handleChange} value={formData.username} />
+                  <div className="password-wrapper">
+                    <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Password" required onChange={handleChange} value={formData.password} />
+                    <span className="password-toggle" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? '🙈' : '👁️'}</span>
+                  </div>
+                  <button type="submit">Login</button>
+                </form>
+                <p className="switch-link" onClick={() => setForm('signup')} tabIndex={0} role="button">Don't have an account? Signup</p>
+              </div>
+              <div className="flip-face flip-signup">
+                <h2>Signup</h2>
+                <form onSubmit={handleSubmit}>
+                  <input name="name" placeholder="Name" required onChange={handleChange} value={formData.name} />
+                  <input name="email" type="email" placeholder="Gmail Address" required onChange={handleChange} value={formData.email} />
+                  <input name="dob" type="date" required onChange={handleChange} value={formData.dob} />
+                  <select name="gender" required onChange={handleChange} value={formData.gender}>
                     <option value="">Select Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                   </select>
-                </>
-              )}
-
-              <input
-                name="username"
-                placeholder="Username"
-                required
-                onChange={handleChange}
-                value={formData.username}
-              />
-
-              <div className="password-wrapper">
-                <input
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
-                  required
-                  onChange={handleChange}
-                  value={formData.password}
-                />
-                <span
-                  className="password-toggle"
-                  onClick={() => setShowPassword(prev => !prev)}
-                >
-                  {showPassword ? '🙈' : '👁️'}
-                </span>
+                  <input name="username" placeholder="Username" required onChange={handleChange} value={formData.username} />
+                  <div className="password-wrapper">
+                    <input name="password" type={showPassword ? 'text' : 'password'} placeholder="Password" required onChange={handleChange} value={formData.password} />
+                    <span className="password-toggle" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? '🙈' : '👁️'}</span>
+                  </div>
+                  <button type="submit">Signup</button>
+                </form>
+                <p className="switch-link" onClick={() => setForm('login')} tabIndex={0} role="button">Already have an account? Login</p>
               </div>
-
-              <button type="submit">{form === 'login' ? 'Login' : 'Signup'}</button>
-            </form>
-
-            <p
-              onClick={toggleForm}
-              className="switch-link"
-              tabIndex={0}
-              role="button"
-              onKeyPress={e => e.key === 'Enter' && toggleForm()}
-            >
-              {form === 'login' ? "Don't have an account? Signup" : 'Already have an account? Login'}
-            </p>
+            </div>
           </div>
         </div>
      ) : (
   <div className="about-container glass-box animated-fade">
-    <h3>About NutriTrack</h3>
-    <p>
-      NutriTrack is your all-in-one wellness assistant—designed to guide users through personalized health journeys with BMI calculation,
-      tailored diet charts, and goal-based exercise plans.
-    </p>
-    <p>
-      Our mission is to empower every individual with data-driven insights and motivation to live healthier, stronger, and smarter every day.
-      Backed by nutritional research and modern UI/UX, we ensure health never felt this effortless.
-    </p>
-
-    {/* ✅ Contact Info Section */}
-    <div className="contact-box">
-      <h4>Contact Us</h4>
-      <p><strong>Name:</strong> Karthikeya Pisupati</p>
-      <p><strong>Email:</strong> pisupatikarthikeyabharadwaja@gmail.com</p>
-      <p><strong>Phone:</strong> +91 7075686837</p>
-      <p><strong>Location:</strong> Guntur</p>
-    </div>
-
-    <button className="switch-link" onClick={toggleAbout}>← Back to Login</button>
   </div>
 )}
 
