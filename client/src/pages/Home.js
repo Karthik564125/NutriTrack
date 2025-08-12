@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import HealthChat from './components/HealthChat';
 import './home.css';
 import { apiUrl } from '../api';
 
 const Home = ({ user, setUser, bmiData, setBmiData }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [height, setHeight] = useState('');
   const [heightUnit, setHeightUnit] = useState('meters');
@@ -68,6 +69,24 @@ const fetchStreaks = useCallback(async () => {
     fetchStreaks();
   }
 }, [user, fetchLatestBMI, fetchStreaks]);
+
+  // Re-fetch when returning to /home via navigation history or tab focus
+  useEffect(() => {
+    if (!user?.id) return;
+    fetchLatestBMI();
+    fetchStreaks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.key]);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const onFocus = () => {
+      fetchLatestBMI();
+      fetchStreaks();
+    };
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, [user?.id, fetchLatestBMI, fetchStreaks]);
 
 
   useEffect(() => {
@@ -250,7 +269,7 @@ const fetchStreaks = useCallback(async () => {
 
   {/* MIDDLE: Health Summary */}
   <div className="glass-box panel summary-panel">
-    <h2>📈 Previous Health Summary</h2>
+    <h2>Health Summary</h2>
     {bmiData ? (
       <>
         <p><strong>Last BMI:</strong> {bmiData.bmi}</p>
