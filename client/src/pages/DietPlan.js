@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HealthChat from './components/HealthChat';
+import WeeklyTracker from './components/WeeklyTracker';
 import { apiUrl } from '../api';
 import './diet.css';
 
@@ -183,6 +184,15 @@ const DietPlan = ({ user }) => {
           </div>
         )}
       </div>
+
+      <WeeklyTracker
+        title="🗓️ Weekly Diet Tracker"
+        currentStreak={streak}
+        lastCompletedDate={doneToday ? new Date() : null}
+        onMarkToday={markDone}
+        isMarking={updateLoading}
+        disabled={doneToday}
+      />
 
       <div className="glass-box">
         <h2>🍎 Nutritional Goals</h2>

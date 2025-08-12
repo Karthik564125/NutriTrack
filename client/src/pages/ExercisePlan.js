@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import HealthChat from './components/HealthChat';
+import WeeklyTracker from './components/WeeklyTracker';
 import { apiUrl } from '../api';
 import './diet.css';
 
@@ -189,6 +190,15 @@ const ExercisePlan = ({ user }) => {
           ))}
         </div>
       </div>
+
+      <WeeklyTracker
+        title="🗓️ Weekly Exercise Tracker"
+        currentStreak={streak}
+        lastCompletedDate={doneToday ? new Date() : null}
+        onMarkToday={markDone}
+        isMarking={updateLoading}
+        disabled={doneToday}
+      />
 
       <div className="glass-box">
         <h2>🧘 Yoga for Holistic Wellness</h2>

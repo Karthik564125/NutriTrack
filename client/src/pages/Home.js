@@ -253,7 +253,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
               <p><strong>🏃 Exercise Streak:</strong> {exerciseStreak} days</p>
             </>
           ) : (
-            <p>Start by entering your height and weight, then tap Calculate BMI.</p>
+            <p>After clicking "Calculate BMI", you will see your BMI result , and start your health journey after clicking "Diet Plan" or "Exercise Plan"</p>
           )}
         </div>
 
@@ -294,7 +294,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
           </div>
           <div className="info-card">
             <h3>🏃‍♂ Exercise Tracking</h3>
-            <p>Track your workout streaks and get personalized Indian fitness routines with traditional exercises.</p>
+            <p>Track your workout streaks & get personalized Indian fitness routines with traditional exercises.</p>
           </div>
           <div className="info-card">
             <h3>🧘‍♀ Health Expert</h3>
