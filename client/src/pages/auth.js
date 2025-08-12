@@ -60,7 +60,8 @@ const AuthPage = ({ setUser }) => {
         localStorage.setItem('user', JSON.stringify(response.data.user));
         setUser(response.data.user);
         toast.success('Login successful! Redirecting...');
-        setRedirect(true);
+        // Navigate immediately to avoid any timing issues
+        navigate('/home');
       } else {
         toast.success('Signup successful! Please login.');
         setForm('login');
