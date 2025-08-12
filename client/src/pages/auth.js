@@ -5,11 +5,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './auth.css';
-import Lottie from 'lottie-react';
-import waterAnim from '../assets/water.json';
-import sleepAnim from '../assets/sleep.json';
-import aiAnim from '../assets/ai.json';
-import bmiVideo from '../assets/bmi.mp4';
 
 const AuthPage = ({ setUser }) => {
   const [form, setForm] = useState('login');
@@ -96,22 +91,6 @@ const AuthPage = ({ setUser }) => {
 
       {!showAbout ? (
         <div className="auth-container">
-          <div className="hero">
-            <div className="hero-left">
-              <video className="hero-video" src={bmiVideo} autoPlay muted loop playsInline />
-            </div>
-            <div className="hero-right">
-              <h2>Your daily health companion</h2>
-              <p>AI diet + weekly workouts + streak tracking — tailored for you</p>
-              <ul className="mini-features">
-                <li>🥗 AI Indian meal plans</li>
-                <li>💪 Home-friendly workouts</li>
-                <li>🔥 Streaks that keep you consistent</li>
-              </ul>
-              <p className="trust">🔒 Privacy-first. We only store what’s needed to personalize your plans.</p>
-              <p className="stats">✅ 7-day planners | ✅ Chat health tips</p>
-            </div>
-          </div>
           <div className="auth-box animated-fade">
             <h2>{form === 'login' ? 'Login' : 'Signup'}</h2>
             <form onSubmit={handleSubmit}>
@@ -190,10 +169,6 @@ const AuthPage = ({ setUser }) => {
             >
               {form === 'login' ? "Don't have an account? Signup" : 'Already have an account? Login'}
             </p>
-            <div className="cta-row">
-              <Link to="/about" className="cta-link">Explore features →</Link>
-              {form === 'login' && <span className="cta-hint">New here? Signup in under 1 minute</span>}
-            </div>
           </div>
         </div>
      ) : (
