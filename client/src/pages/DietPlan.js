@@ -192,6 +192,15 @@ const DietPlan = ({ user }) => {
         onMarkToday={markDone}
         isMarking={updateLoading}
         disabled={doneToday}
+        infoLabels={[
+          'High-protein breakfast',
+          'Fiber-rich lunch',
+          'Hydration focus',
+          'Light dinner',
+          'Probiotics & curd',
+          'Fruits + nuts',
+          'Cheat meal in moderation'
+        ]}
       />
 
       <div className="glass-box">

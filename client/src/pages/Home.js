@@ -167,13 +167,13 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
   };
 
   const getBMIProgress = () => {
-    const bmi = parseFloat(bmiData?.bmi);
+    const bmi = parseFloat((bmiData || lastBmi)?.bmi);
     if (!bmi) return 0;
     return Math.min((bmi / 40) * 100, 100);
   };
 
   const getBMIColor = () => {
-    const bmi = parseFloat(bmiData?.bmi);
+    const bmi = parseFloat((bmiData || lastBmi)?.bmi);
     if (bmi < 18.5) return 'blue';
     if (bmi < 24.9) return 'green';
     if (bmi < 29.9) return 'orange';
@@ -260,10 +260,10 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
         {/* RIGHT: BMI Result */}
         <div className="glass-box panel result-panel">
           <h2>Your BMI Result</h2>
-          {bmiData ? (
+          {(bmiData || lastBmi) ? (
             <>
-              <p><strong>BMI:</strong> {bmiData.bmi}</p>
-              <p><strong>Category:</strong> {bmiData.category}</p>
+              <p><strong>BMI:</strong> {(bmiData || lastBmi).bmi}</p>
+              <p><strong>Category:</strong> {(bmiData || lastBmi).category}</p>
               <div className="progress-bar-container">
                 <div className="progress-bar"
                   style={{

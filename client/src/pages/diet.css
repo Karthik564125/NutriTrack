@@ -341,6 +341,12 @@ body {
   opacity: 0.9;
 }
 
+.day-hint {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 0.25rem;
+}
+
 .day-btn {
   margin-top: 0.5rem;
   background-color: var(--accent-color);

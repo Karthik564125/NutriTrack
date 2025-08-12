@@ -198,6 +198,15 @@ const ExercisePlan = ({ user }) => {
         onMarkToday={markDone}
         isMarking={updateLoading}
         disabled={doneToday}
+        infoLabels={[
+          'Legs & Glutes',
+          'Chest & Triceps',
+          'Back & Biceps',
+          'Core & Abs',
+          'Shoulders',
+          'Yoga/Stretch',
+          'Active Rest'
+        ]}
       />
 
       <div className="glass-box">

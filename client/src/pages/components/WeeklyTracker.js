@@ -50,7 +50,8 @@ const WeeklyTracker = ({
   lastCompletedDate = null,
   onMarkToday,
   isMarking = false,
-  disabled = false
+  disabled = false,
+  infoLabels = [] // optional labels for each weekday (Mon..Sun)
 }) => {
   const weekDays = useWeekDays();
   const doneSet = useMemo(
@@ -62,9 +63,10 @@ const WeeklyTracker = ({
     <div className="glass-box">
       <h3 style={{ marginTop: 0 }}>{title}</h3>
       <div className="week-grid">
-        {weekDays.map((d) => {
+        {weekDays.map((d, idx) => {
           const isDone = doneSet.has(d.dateStr);
           const isToday = d.isToday;
+          const hint = infoLabels[idx] || '';
           return (
             <div
               key={d.dateStr}
@@ -72,6 +74,7 @@ const WeeklyTracker = ({
             >
               <div className="day-label">{d.label}</div>
               <div className="day-status">{isDone ? 'Done' : 'Pending'}</div>
+              {hint && <div className="day-hint">{hint}</div>}
               {isToday && (
                 <button
                   className="day-btn"
