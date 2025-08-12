@@ -82,7 +82,10 @@ const AuthPage = ({ setUser }) => {
   return (
     <div className="auth-wrapper">
       <nav className="navbar">
-        <div className="logo">NutriTrack</div>
+        <div className="logo" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <img src={process.env.PUBLIC_URL + '/logo.png'} alt="NutriTrack" style={{ height: 24, width: 24 }} />
+          <span>NutriTrack</span>
+        </div>
         <Link to="/about" className="about-box">About Us</Link>
       </nav>
 
