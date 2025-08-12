@@ -47,16 +47,24 @@ const App = () => {
         theme="colored"
       />
       <Routes>
-        <Route path="/login" element={<AuthPage setUser={setUser} />} />
-        <Route path="/" element={<Home user={user} setUser={setUser} bmiData={bmiData} setBmiData={setBmiData} />} />
-        <Route path="/home" element={<Home user={user} setUser={setUser} bmiData={bmiData} setBmiData={setBmiData} />} />
+        <Route path="/" element={user ? <Navigate to="/home" /> : <AuthPage setUser={setUser} />} />
+        <Route
+          path="/home"
+          element={
+            user ? (
+              <Home user={user} setUser={setUser} bmiData={bmiData} setBmiData={setBmiData} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
         <Route
           path="/diet"
           element={
             user ? (
               <DietPlan user={user} setUser={setUser} onLogout={handleLogout} />
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
@@ -66,7 +74,7 @@ const App = () => {
             user ? (
               <ExercisePlan user={user} setUser={setUser} onLogout={handleLogout} />
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
