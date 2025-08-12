@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Lottie from 'lottie-react';
 import HealthChat from './components/HealthChat';
 import './home.css';
 import { apiUrl } from '../api';
+import aiAnim from '../assets/ai.json';
+import exerciseAnim from '../assets/exercise.json';
+import foodAnim from '../assets/food.json';
+import waterAnim from '../assets/water.json';
+import sleepAnim from '../assets/sleep.json';
+import bmiVideo from '../assets/bmi.mp4';
 
 const Home = ({ user, setUser, bmiData, setBmiData }) => {
   const navigate = useNavigate();
@@ -285,28 +292,36 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
         <h2>📱 How NutriTrack Works</h2>
         <div className="info-grid">
           <div className="info-card">
-            <h3>🎯 BMI Calculation</h3>
-            <p>Enter your height and weight to get your BMI category. This helps us provide personalized recommendations.</p>
+            <div className="info-anim">
+              <video className="info-video" src={bmiVideo} autoPlay muted loop playsInline />
+            </div>
+            <h3>🎯 BMI</h3>
+            <p>Calculate BMI quickly and get your category for tailored plans.</p>
           </div>
           <div className="info-card">
-            <h3>🥗 Diet Planning</h3>
-            <p>Get AI-powered Indian meal plans based on your BMI, dietary preferences, and health goals.</p>
+            <div className="info-anim"><Lottie animationData={waterAnim} loop style={{ height: 120 }} /></div>
+            <h3>💧 Water</h3>
+            <p>Stay hydrated. Aim 8–10 glasses/day based on activity and climate.</p>
           </div>
           <div className="info-card">
-            <h3>🏃‍♂ Exercise Tracking</h3>
-            <p>Track your workout streaks & get personalized Indian fitness routines with traditional exercises.</p>
+            <div className="info-anim"><Lottie animationData={sleepAnim} loop style={{ height: 120 }} /></div>
+            <h3>😴 Sleep</h3>
+            <p>Target 7–9 hours for recovery, metabolism and overall wellness.</p>
           </div>
           <div className="info-card">
-            <h3>🧘‍♀ Health Expert</h3>
-            <p>Chat with our AI health expert for Indian dietary advice, traditional remedies, and wellness tips.</p>
+            <div className="info-anim"><Lottie animationData={foodAnim} loop style={{ height: 120 }} /></div>
+            <h3>🥗 Food</h3>
+            <p>Balanced Indian meals with macros and portion guidance.</p>
           </div>
           <div className="info-card">
-            <h3>📊 Progress Tracking</h3>
-            <p>Monitor your streaks, track your progress, and maintain consistency in your health journey.</p>
+            <div className="info-anim"><Lottie animationData={aiAnim} loop style={{ height: 120 }} /></div>
+            <h3>🤖 AI Coach</h3>
+            <p>Generate custom diet/workout plans and chat for health tips.</p>
           </div>
           <div className="info-card">
-            <h3>🇮🇳 Indian Context</h3>
-            <p>All recommendations are tailored to Indian lifestyle, traditional foods, and cultural practices.</p>
+            <div className="info-anim"><Lottie animationData={exerciseAnim} loop style={{ height: 120 }} /></div>
+            <h3>💪 Exercise</h3>
+            <p>Home-friendly workouts and weekly goals. Track streaks easily.</p>
           </div>
         </div>
       </div>

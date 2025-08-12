@@ -325,6 +325,8 @@ option {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 255, 171, 0.2);
 }
+.info-anim { display:flex; justify-content:center; align-items:center; height:140px; margin-bottom:0.75rem; }
+.info-video { width: 160px; height: 140px; object-fit: cover; border-radius: 10px; }
 .middle-panel {
   flex: 1;
   margin: 0 10px;

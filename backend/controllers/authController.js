@@ -13,11 +13,9 @@ export const signup = async (req, res) => {
 
     // Send welcome email (non-blocking for production reliability)
     try {
-      await sendEmail(
-        email,
-        'Welcome to Our App!',
-        `Hi ${name},\n\nThank you for signing up to our app!`
-      );
+      const subject = '🎉 Welcome to NutriTrack! Let’s begin your health journey';
+      const body = `Hey ${name} 👋\n\nWelcome to NutriTrack — your personal health companion! 🌱✨\n\nHere’s what you can do right now:\n1) Calculate your BMI ⚖️ to know your category\n2) Choose your diet type 🥗🍗 and set your goals\n3) Generate your AI Meal Plan 🤖🍽️ for 7 days\n4) Try the AI Workout Plan 💪 with guided ideas\n5) Track your daily streaks 🔥 and weekly progress 🗓️\n6) Chat with our Health Expert 🧘‍♀️ for quick tips\n\nPro tips:\n• Save and revisit your last results on Home 📊\n• Tap “Mark Today” once a day to keep the streak alive ✅\n• Stay hydrated and sleep well 💧😴\n\nWe’re excited to be part of your journey.\nStay consistent, stay healthy! 💚\n\n— Team NutriTrack`;
+      await sendEmail(email, subject, body);
     } catch (emailError) {
       console.error('Email send failed (non-fatal):', emailError);
     }
