@@ -16,6 +16,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
   const [showChat, setShowChat] = useState(false);
   const [exerciseStreak, setExerciseStreak] = useState(0);
   const [dietStreak, setDietStreak] = useState(0);
+  const [lastBmi, setLastBmi] = useState(null);
 
   const fetchLatestBMI = useCallback(async () => {
     if (!user?.id) return;
@@ -24,23 +25,23 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
       const data = await response.json();
       if (response.ok && data && data.id) {
         const bmiResult = {
-          bmi: data.bmi_value.toFixed(2),
+          bmi: Number(data.bmi_value).toFixed(2),
           category: data.category
         };
-        setBmiData(bmiResult);
-        localStorage.setItem(`bmiData_${user.id}`, JSON.stringify(bmiResult)); // cache BMI
+        setLastBmi(bmiResult);
+        localStorage.setItem(`lastBmi_${user.id}`, JSON.stringify(bmiResult)); // cache last BMI
         setHeight(data.height);
         setHeightUnit(data.height_unit);
         setWeight(data.weight);
         setWeightUnit(data.weight_unit);
         setDietType(data.diet_type);
       } else {
-        setBmiData(null);
+        setLastBmi(null);
       }
     } catch (error) {
       console.error('Error fetching latest BMI:', error);
     }
-  }, [user, setBmiData]);
+  }, [user]);
 
   const fetchStreaks = useCallback(async () => {
     if (!user?.id) return;
@@ -59,13 +60,12 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
     }
   }, [user?.id]);
 
-  // Load cached BMI instantly when user logs in, then fetch from backend
+  // Load cached last BMI instantly when user logs in, then fetch from backend
   useEffect(() => {
     if (user?.id) {
-      const cachedBmi = localStorage.getItem(`bmiData_${user.id}`);
-      if (cachedBmi) {
-        setBmiData(JSON.parse(cachedBmi));
-      }
+      const cachedLast = localStorage.getItem(`lastBmi_${user.id}`);
+      if (cachedLast) setLastBmi(JSON.parse(cachedLast));
+      setBmiData(null); // current session result starts empty
       fetchLatestBMI();
       fetchStreaks();
     }
@@ -96,10 +96,11 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
   }, []);
 
   const handleLogout = () => {
-    // Keep cached BMI and preferences so they reappear quickly on next login
+    // Keep cached last BMI and preferences; only remove user
     localStorage.removeItem('user');
     setUser(null);
     setBmiData(null);
+    setLastBmi(null);
     navigate('/');
   };
 
@@ -138,8 +139,9 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
     else category = 'Obesity';
 
     const bmiResult = { bmi: bmi.toFixed(2), category };
-    setBmiData(bmiResult);
-    localStorage.setItem(`bmiData_${user.id}`, JSON.stringify(bmiResult)); // cache for next session
+    setBmiData(bmiResult);        // current session
+    setLastBmi(bmiResult);        // update summary immediately
+    localStorage.setItem(`lastBmi_${user.id}`, JSON.stringify(bmiResult));
     localStorage.setItem('dietType', dietType);
 
     try {
@@ -243,10 +245,10 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
         {/* MIDDLE: Health Summary */}
         <div className="glass-box panel summary-panel">
           <h2>Health Summary</h2>
-          {bmiData ? (
+          {lastBmi ? (
             <>
-              <p><strong>Last BMI:</strong> {bmiData.bmi}</p>
-              <p><strong>Category:</strong> {bmiData.category}</p>
+              <p><strong>Last BMI:</strong> {lastBmi.bmi}</p>
+              <p><strong>Category:</strong> {lastBmi.category}</p>
               <p><strong>🥗 Diet Streak:</strong> {dietStreak} days</p>
               <p><strong>🏃 Exercise Streak:</strong> {exerciseStreak} days</p>
             </>
