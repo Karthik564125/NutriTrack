@@ -27,15 +27,14 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
           bmi: data.bmi_value.toFixed(2),
           category: data.category
         };
-
         setBmiData(bmiResult);
+        localStorage.setItem(`bmiData_${user.id}`, JSON.stringify(bmiResult)); // cache BMI
         setHeight(data.height);
         setHeightUnit(data.height_unit);
         setWeight(data.weight);
         setWeightUnit(data.weight_unit);
         setDietType(data.diet_type);
       } else {
-        // No previous record
         setBmiData(null);
       }
     } catch (error) {
@@ -43,41 +42,43 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
     }
   }, [user, setBmiData]);
 
-const fetchStreaks = useCallback(async () => {
-  if (!user?.id) return;
-  try {
-    const exRes = await fetch(apiUrl(`/api/streaks/${user.id}/exercise`));
-    const exData = await exRes.json();
-    setExerciseStreak(exData.currentStreak || 0);
+  const fetchStreaks = useCallback(async () => {
+    if (!user?.id) return;
+    try {
+      const exRes = await fetch(apiUrl(`/api/streaks/${user.id}/exercise`));
+      const exData = await exRes.json();
+      setExerciseStreak(exData.currentStreak || 0);
 
-    const dietRes = await fetch(apiUrl(`/api/streaks/${user.id}/diet`));
-    const dietData = await dietRes.json();
-    setDietStreak(dietData.currentStreak || 0);
-  } catch (err) {
-    console.error('Failed to fetch streaks:', err);
-    setExerciseStreak(0);
-    setDietStreak(0);
-  }
-}, [user?.id]);
+      const dietRes = await fetch(apiUrl(`/api/streaks/${user.id}/diet`));
+      const dietData = await dietRes.json();
+      setDietStreak(dietData.currentStreak || 0);
+    } catch (err) {
+      console.error('Failed to fetch streaks:', err);
+      setExerciseStreak(0);
+      setDietStreak(0);
+    }
+  }, [user?.id]);
 
+  // Load cached BMI instantly when user logs in, then fetch from backend
+  useEffect(() => {
+    if (user?.id) {
+      const cachedBmi = localStorage.getItem(`bmiData_${user.id}`);
+      if (cachedBmi) {
+        setBmiData(JSON.parse(cachedBmi));
+      }
+      fetchLatestBMI();
+      fetchStreaks();
+    }
+  }, [user, fetchLatestBMI, fetchStreaks]);
 
-  // Removed auto-update on navigation; users must explicitly mark done
-
- useEffect(() => {
-  if (user?.id) {
-    fetchLatestBMI();
-    fetchStreaks();
-  }
-}, [user, fetchLatestBMI, fetchStreaks]);
-
-  // Re-fetch when returning to /home via navigation history or tab focus
+  // Re-fetch when returning via navigation history
   useEffect(() => {
     if (!user?.id) return;
     fetchLatestBMI();
     fetchStreaks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.key]);
+  }, [location.key, user?.id, fetchLatestBMI, fetchStreaks]);
 
+  // Re-fetch when window gains focus
   useEffect(() => {
     if (!user?.id) return;
     const onFocus = () => {
@@ -88,13 +89,16 @@ const fetchStreaks = useCallback(async () => {
     return () => window.removeEventListener('focus', onFocus);
   }, [user?.id, fetchLatestBMI, fetchStreaks]);
 
-
+  // Load diet preference from local storage on first load
   useEffect(() => {
     const storedDiet = localStorage.getItem('dietType');
     if (storedDiet) setDietType(storedDiet);
   }, []);
 
   const handleLogout = () => {
+    if (user?.id) {
+      localStorage.removeItem(`bmiData_${user.id}`); // remove only this user’s cached BMI
+    }
     localStorage.clear();
     setUser(null);
     setBmiData(null);
@@ -113,25 +117,14 @@ const fetchStreaks = useCallback(async () => {
     }
 
     switch (heightUnit) {
-      case 'cm':
-        heightMeters /= 100;
-        break;
-      case 'feet':
-        heightMeters *= 0.3048;
-        break;
-      case 'inches':
-        heightMeters *= 0.0254;
-        break;
-      default:
-        break;
+      case 'cm': heightMeters /= 100; break;
+      case 'feet': heightMeters *= 0.3048; break;
+      case 'inches': heightMeters *= 0.0254; break;
+      default: break;
     }
 
-    switch (weightUnit) {
-      case 'pounds':
-        weightKg *= 0.453592;
-        break;
-      default:
-        break;
+    if (weightUnit === 'pounds') {
+      weightKg *= 0.453592;
     }
 
     if (heightMeters <= 0 || weightKg <= 0) {
@@ -148,6 +141,7 @@ const fetchStreaks = useCallback(async () => {
 
     const bmiResult = { bmi: bmi.toFixed(2), category };
     setBmiData(bmiResult);
+    localStorage.setItem(`bmiData_${user.id}`, JSON.stringify(bmiResult)); // cache for next session
     localStorage.setItem('dietType', dietType);
 
     try {
@@ -201,115 +195,92 @@ const fetchStreaks = useCallback(async () => {
       <nav className="navbar">
         <div className="logo">NutriTrack</div>
         <div className="nav-buttons">
-          <button onClick={() => setShowChat(true)} className="chat-btn">
-            🧘‍♀️ Health Expert
-          </button>
+          <button onClick={() => setShowChat(true)} className="chat-btn">🧘‍♀️ Health Expert</button>
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
       </nav>
 
       <div className="dashboard-3panel">
-  {/* LEFT: Input Form */}
-  <div className="glass-box panel input-panel">
-    <h1>Welcome, {user?.name || 'User'}!</h1>
-    <p>Your health journey starts here 💪</p>
-    <form onSubmit={calculateBMI}>
-      <div className="input-group">
-        <input
-          type="number"
-          placeholder="Enter height"
-          value={height}
-          onChange={(e) => setHeight(e.target.value)}
-        />
-        <select value={heightUnit} onChange={(e) => setHeightUnit(e.target.value)}>
-          <option value="meters">meters</option>
-          <option value="cm">cm</option>
-          <option value="feet">feet</option>
-          <option value="inches">inches</option>
-        </select>
-      </div>
 
-      <div className="input-group">
-        <input
-          type="number"
-          placeholder="Enter weight"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-        <select value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
-          <option value="kg">kg</option>
-          <option value="pounds">pounds</option>
-        </select>
-      </div>
+        {/* LEFT: Input Form */}
+        <div className="glass-box panel input-panel">
+          <h1>Welcome, {user?.name || 'User'}!</h1>
+          <p>Your health journey starts here 💪</p>
+          <form onSubmit={calculateBMI}>
+            <div className="input-group">
+              <input type="number" placeholder="Enter height"
+                value={height} onChange={(e) => setHeight(e.target.value)} />
+              <select value={heightUnit} onChange={(e) => setHeightUnit(e.target.value)}>
+                <option value="meters">meters</option>
+                <option value="cm">cm</option>
+                <option value="feet">feet</option>
+                <option value="inches">inches</option>
+              </select>
+            </div>
 
-      <div className="diet-toggle">
-        <label>
-          <input
-            type="radio"
-            name="dietType"
-            value="veg"
-            checked={dietType === 'veg'}
-            onChange={() => setDietType('veg')}
-          /> Veg
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="dietType"
-            value="non-veg"
-            checked={dietType === 'non-veg'}
-            onChange={() => setDietType('non-veg')}
-          /> Non-Veg
-        </label>
-      </div>
+            <div className="input-group">
+              <input type="number" placeholder="Enter weight"
+                value={weight} onChange={(e) => setWeight(e.target.value)} />
+              <select value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
+                <option value="kg">kg</option>
+                <option value="pounds">pounds</option>
+              </select>
+            </div>
 
-      <button type="submit" className="logout-btn">Calculate BMI</button>
-    </form>
-  </div>
+            <div className="diet-toggle">
+              <label>
+                <input type="radio" name="dietType" value="veg"
+                  checked={dietType === 'veg'} onChange={() => setDietType('veg')} /> Veg
+              </label>
+              <label>
+                <input type="radio" name="dietType" value="non-veg"
+                  checked={dietType === 'non-veg'} onChange={() => setDietType('non-veg')} /> Non-Veg
+              </label>
+            </div>
 
-  {/* MIDDLE: Health Summary */}
-  <div className="glass-box panel summary-panel">
-    <h2>Health Summary</h2>
-    {bmiData ? (
-      <>
-        <p><strong>Last BMI:</strong> {bmiData.bmi}</p>
-        <p><strong>Category:</strong> {bmiData.category}</p>
-        <p><strong>🥗 Diet Streak:</strong> {dietStreak} days</p>
-        <p><strong>🏃 Exercise Streak:</strong> {exerciseStreak} days</p>
-      </>
-    ) : (
-      <p>Start by entering your height and weight, then tap Calculate BMI.</p>
-    )}
-  </div>
-
-  {/* RIGHT: BMI Result */}
-  <div className="glass-box panel result-panel">
-    <h2>Your BMI Result</h2>
-    {bmiData ? (
-      <>
-        <p><strong>BMI:</strong> {bmiData.bmi}</p>
-        <p><strong>Category:</strong> {bmiData.category}</p>
-        <div className="progress-bar-container">
-          <div
-            className="progress-bar"
-            style={{
-              width: `${getBMIProgress()}%`,
-              backgroundColor: getBMIColor()
-            }}
-          ></div>
+            <button type="submit" className="logout-btn">Calculate BMI</button>
+          </form>
         </div>
-        <div className="bmi-actions">
-          <button onClick={goToDiet} className="nav-btn">Diet Plan</button>
-          <button onClick={goToExercise} className="nav-btn">Exercise Plan</button>
+
+        {/* MIDDLE: Health Summary */}
+        <div className="glass-box panel summary-panel">
+          <h2>Health Summary</h2>
+          {bmiData ? (
+            <>
+              <p><strong>Last BMI:</strong> {bmiData.bmi}</p>
+              <p><strong>Category:</strong> {bmiData.category}</p>
+              <p><strong>🥗 Diet Streak:</strong> {dietStreak} days</p>
+              <p><strong>🏃 Exercise Streak:</strong> {exerciseStreak} days</p>
+            </>
+          ) : (
+            <p>Start by entering your height and weight, then tap Calculate BMI.</p>
+          )}
         </div>
-      </>
-    ) : (
-      <p>Enter your height and weight to see your BMI</p>
-    )}
-  </div>
-</div>
 
-
+        {/* RIGHT: BMI Result */}
+        <div className="glass-box panel result-panel">
+          <h2>Your BMI Result</h2>
+          {bmiData ? (
+            <>
+              <p><strong>BMI:</strong> {bmiData.bmi}</p>
+              <p><strong>Category:</strong> {bmiData.category}</p>
+              <div className="progress-bar-container">
+                <div className="progress-bar"
+                  style={{
+                    width: `${getBMIProgress()}%`,
+                    backgroundColor: getBMIColor()
+                  }}></div>
+              </div>
+              <div className="bmi-actions">
+                <button onClick={goToDiet} className="nav-btn">Diet Plan</button>
+                <button onClick={goToExercise} className="nav-btn">Exercise Plan</button>
+              </div>
+            </>
+          ) : (
+            <p>Enter your height and weight to see your BMI</p>
+          )}
+        </div>
+      </div>
       <div className="glass-box app-info-container">
         <h2>📱 How NutriTrack Works</h2>
         <div className="info-grid">
@@ -322,11 +293,11 @@ const fetchStreaks = useCallback(async () => {
             <p>Get AI-powered Indian meal plans based on your BMI, dietary preferences, and health goals.</p>
           </div>
           <div className="info-card">
-            <h3>🏃‍♂️ Exercise Tracking</h3>
+            <h3>🏃‍♂ Exercise Tracking</h3>
             <p>Track your workout streaks and get personalized Indian fitness routines with traditional exercises.</p>
           </div>
           <div className="info-card">
-            <h3>🧘‍♀️ Health Expert</h3>
+            <h3>🧘‍♀ Health Expert</h3>
             <p>Chat with our AI health expert for Indian dietary advice, traditional remedies, and wellness tips.</p>
           </div>
           <div className="info-card">
@@ -347,4 +318,4 @@ const fetchStreaks = useCallback(async () => {
   );
 };
 
-export default Home;
+export default Home;
