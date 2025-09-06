@@ -3,8 +3,6 @@
 NutriTrack is an AI-powered, user-friendly health tracking web application designed to help people achieve their wellness goals through **personalized diet plans**, **custom workouts**, and **holistic lifestyle guidance**.
 With just your *height* and *weight*, NutriTrack calculates your BMI, offers guidance, and uses AI to create tailored plans—making it your **personal trainer, nutritionist, and health coach** all in one.
 ---
-**Live App:** [nutritrack-5qbw.onrender.com](https://nutritrack-5qbw.onrender.com)
-
 ## 📖 Overview
 NutriTrack focuses on **simplicity and personalization**. Whether you want to lose weight, gain muscle, improve stamina, or maintain a healthy lifestyle, the app will guide you through:
 - AI-generated **meal and workout** recommendations.
