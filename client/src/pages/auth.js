@@ -100,21 +100,7 @@ const AuthPage = ({ setUser }) => {
               </div>
             </div>
            
-           {/* ➡️ Made By container */}
-<div className="hero-box animated-fade">
-  {/* ...all your hero content... */}
-  {/* "Made by" as a badge */}
-  <span className="made-by-badge">
-    Made by{' '}
-    <a
-      href="https://karthik564125.github.io/myportfolio/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Karthik
-    </a>
-  </span>
-</div>
+          
             
             {/* inline explore removed */}
           </div>
