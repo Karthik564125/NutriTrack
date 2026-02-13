@@ -1,42 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AuthPage from './pages/auth';
-import Home from './pages/Home';
-import DietPlan from './pages/DietPlan';
-import ExercisePlan from './pages/ExercisePlan';
-import About from './pages/About';
+import AuthPage from './pages/Auth/AuthPage';
+import Home from './pages/Home/Home';
+import DietPlan from './pages/Diet/DietPlan';
+import ExercisePlan from './pages/Exercise/ExercisePlan';
+import Profile from './pages/Profile/Profile';
+import About from './pages/About/About';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { auth, db } from './config/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+
 const App = () => {
   const [user, setUser] = useState(null);
-  const [bmiData, setBmiData] = useState(null); // 🧠 BMI state tied to user
+  const [bmiData, setBmiData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem('user');
-    if (!stored || stored === 'undefined' || stored === 'null') {
-      localStorage.removeItem('user');
-      return;
-    }
-    try {
-      setUser(JSON.parse(stored));
-    } catch (e) {
-      localStorage.removeItem('user');
-    }
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Fetch full profile from Firestore to ensure session is consistent
+        const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+        const userData = userDoc.exists() ? userDoc.data() : {};
+
+        const userObj = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          ...userData
+        };
+
+        setUser(userObj);
+        localStorage.setItem('user', JSON.stringify(userObj));
+      } else {
+        setUser(null);
+        localStorage.removeItem('user');
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  // Removed global BMI reset on user change to avoid clearing after fetch
-
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await auth.signOut();
     setUser(null);
-    setBmiData(null); // 🔐 Clear BMI on logout
+    setBmiData(null);
     localStorage.removeItem('user');
   };
+
+  if (loading) {
+    return <div className="loading-screen">Loading NutriTrack...</div>;
+  }
 
   return (
     <Router>
       <ToastContainer
-        position="top-right"
+        position="top-center"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -44,7 +65,7 @@ const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="light"
       />
       <Routes>
         <Route path="/" element={user ? <Navigate to="/home" /> : <AuthPage setUser={setUser} />} />
@@ -73,6 +94,16 @@ const App = () => {
           element={
             user ? (
               <ExercisePlan user={user} setUser={setUser} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            user ? (
+              <Profile user={user} setUser={setUser} />
             ) : (
               <Navigate to="/" />
             )

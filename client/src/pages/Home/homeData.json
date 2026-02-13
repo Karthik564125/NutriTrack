@@ -1,0 +1,44 @@
+[
+    {
+        "id": "bmi",
+        "title": "🎯 BMI",
+        "description": "Calculate BMI quickly and get your category for tailored plans.",
+        "type": "video",
+        "asset": "bmiVideo"
+    },
+    {
+        "id": "water",
+        "title": "💧 Water",
+        "description": "Stay hydrated. Aim 8–10 glasses/day based on activity and climate.",
+        "type": "lottie",
+        "asset": "waterAnim"
+    },
+    {
+        "id": "sleep",
+        "title": "😴 Sleep",
+        "description": "Target 7–9 hours for recovery, metabolism and overall wellness.",
+        "type": "lottie",
+        "asset": "sleepAnim"
+    },
+    {
+        "id": "food",
+        "title": "🥗 Food",
+        "description": "Balanced Indian meals with macros and portion guidance.",
+        "type": "lottie",
+        "asset": "foodAnim"
+    },
+    {
+        "id": "ai",
+        "title": "🤖 AI Coach",
+        "description": "Generate custom diet/workout plans and chat for health tips.",
+        "type": "lottie",
+        "asset": "aiAnim"
+    },
+    {
+        "id": "exercise",
+        "title": "💪 Exercise",
+        "description": "Home-friendly workouts and weekly goals. Track streaks easily.",
+        "type": "lottie",
+        "asset": "exerciseAnim"
+    }
+]

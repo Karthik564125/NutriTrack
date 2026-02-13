@@ -1,0 +1,45 @@
+{
+    "nutritionalGoals": {
+        "title": "🥗 Core Nutritional Goals",
+        "description": "Based on your {category} category, prioritize a balanced intake of macros to optimize health and energy.",
+        "items": [
+            "High-protein breakfast to kickstart metabolism",
+            "Avoid processed sugars and refined flours",
+            "Drink 3L+ water daily with mineral balance",
+            "Include green leafy vegetables in every meal",
+            "Prioritize lean proteins and healthy fats",
+            "Limit caffeine intake after 4 PM"
+        ]
+    },
+    "supplements": {
+        "title": "💊 Recommended Supplements",
+        "items": [
+            "Multivitamins (Daily) - Comprehensive coverage",
+            "Omega-3 for heart and brain wellness",
+            "Vitamin D3 + K2 for bone and immune support",
+            "Optional Whey Protein for muscle recovery",
+            "Magnesium Bisglycinate for better sleep"
+        ]
+    },
+    "lifestyleTips": {
+        "title": "🧘 Holistic Lifestyle Tips",
+        "tips": [
+            {
+                "label": "Sleep",
+                "text": "Target 7-9 hours of consistent night sleep."
+            },
+            {
+                "label": "Routine",
+                "text": "Stick to fixed meal times to regulate hormones."
+            },
+            {
+                "label": "Mindfulness",
+                "text": "Practice 10 mins of mindful eating/no screens."
+            },
+            {
+                "label": "Movement",
+                "text": "Take a 15-min walk after your heaviest meal."
+            }
+        ]
+    }
+}

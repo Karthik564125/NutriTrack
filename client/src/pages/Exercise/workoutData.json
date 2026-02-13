@@ -1,0 +1,80 @@
+{
+    "trainingTips": [
+        {
+            "label": "Warm-up",
+            "text": "5-10 mins of spot jogging or dynamic stretching."
+        },
+        {
+            "label": "Form",
+            "text": "Prioritize slow, controlled movements over heavy weights."
+        },
+        {
+            "label": "Breath",
+            "text": "Exhale on exertion, inhale on the eccentric phase."
+        },
+        {
+            "label": "Heal",
+            "text": "Rest 48h between heavy muscle group sessions."
+        },
+        {
+            "label": "Hydrate",
+            "text": "Drink at least 500ml of water during your workout."
+        },
+        {
+            "label": "Consistency",
+            "text": "Showing up is 80% of the battle. Stay committed."
+        }
+    ],
+    "basicWorkouts": [
+        {
+            "title": "Seated Abs Circle",
+            "asset": "SeatedAbs",
+            "sets": "3 x 15 - Core focus"
+        },
+        {
+            "title": "Press up position toe tap",
+            "asset": "ToeTap",
+            "sets": "3 x 12 - Stability"
+        },
+        {
+            "title": "Split Jump Exercise",
+            "asset": "SplitJump",
+            "sets": "3 x 10 - Explosive power"
+        },
+        {
+            "title": "Wide arm push up",
+            "asset": "WidePushUp",
+            "sets": "3 x 12 - Chest focus"
+        },
+        {
+            "title": "Burpee and Jump",
+            "asset": "Burpee",
+            "sets": "3 x 10 - Full body HIIT"
+        },
+        {
+            "title": "Plank with Leg Lift",
+            "asset": "TPlank",
+            "sets": "3 x 30 sec - Endurance"
+        },
+        {
+            "title": "Frog Press",
+            "asset": "FrogPress",
+            "sets": "3 x 15 - Glute activation"
+        },
+        {
+            "title": "Lunge",
+            "asset": "Lunge",
+            "sets": "3 x 10 each leg - Leg day"
+        },
+        {
+            "title": "Cobras",
+            "asset": "Cobras",
+            "sets": "3 x 8 - Back mobility"
+        },
+        {
+            "title": "Jumping Jack",
+            "asset": "JumpingJack",
+            "sets": "3 x 30 sec - Cardio"
+        }
+    ]
+}

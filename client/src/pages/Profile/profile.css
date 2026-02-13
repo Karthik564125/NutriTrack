@@ -1,0 +1,128 @@
+/* Profile Theme */
+
+.profile-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+/* Avatar Section in Profile Card */
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: auto !important;
+    /* Override fixed height */
+}
+
+.avatar-section {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.profile-large-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-controls {
+    margin-top: 1rem;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.details-section {
+    width: 100%;
+    text-align: left;
+}
+
+.detail-item {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1rem;
+}
+
+.detail-item label {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+}
+
+.detail-item p {
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: 0.2s;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+
+.stat-item h4 {
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    margin: 0;
+}
+
+/* Macros */
+.targets-container {
+    padding: 1rem;
+}
+
+.macro-mini-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+}
+
+.delete-btn {
+    background: white !important;
+    border: 1px solid #ef4444 !important;
+    color: #ef4444 !important;
+    margin-top: 10px;
+}
+
+.delete-btn:hover {
+    background: #ef4444 !important;
+    color: white !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .profile-container {
+        grid-template-columns: 1fr !important;
+    }
+}
