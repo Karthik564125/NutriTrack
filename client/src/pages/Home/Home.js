@@ -7,7 +7,7 @@ import HistoryModal from '../../components/HistoryModal';
 import { toast } from 'react-toastify';
 import './home.css';
 import { db } from '../../config/firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { getTodayStr } from '../../utils/dateUtils';
 import { logDailyActivity } from '../../utils/logger';
 
@@ -167,7 +167,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
     });
 
     try {
-      await updateDoc(doc(db, 'users', user.uid), {
+      await setDoc(doc(db, 'users', user.uid), {
         height,
         heightUnit,
         weight,
@@ -175,7 +175,7 @@ const Home = ({ user, setUser, bmiData, setBmiData }) => {
         bmi: bmi.toFixed(2),
         category,
         dietType
-      });
+      }, { merge: true });
     } catch (error) {
       console.error('Error saving BMI to Firestore:', error);
     }

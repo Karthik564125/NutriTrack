@@ -19,49 +19,58 @@ import TPlank from '../../assets/T Plank Exercise.json';
 import Burpee from '../../assets/Burpee and Jump Exercise.json';
 import SplitJump from '../../assets/Split Jump Exercise.json';
 
-// 1. High-Relevance Mappings (Specific matching)
+// 1. High-Relevance Mappings
 const SPECIFIC_IMAGES = {
-  plank: 'https://images.unsplash.com/photo-1544367563-12123d8965cd?w=500&q=80', // Yoga/Plank
-  squat: 'https://images.unsplash.com/photo-1574680096141-9c31f2e9c0e5?w=500&q=80', // Squat
-  lunge: 'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=500&q=80', // Lunge
-  pushup: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80', // Pushup pos
-  burpee: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80', // Active
-  run: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&q=80', // Run
-  jump: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&q=80', // Jump
-  weight: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80', // Dumbbells
-  dumbbell: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80'
+  plank: 'https://images.unsplash.com/photo-1544367563-12123d8965cd?w=500&q=80',
+  squat: 'https://images.unsplash.com/photo-1574680096141-9c31f2e9c0e5?w=500&q=80',
+  lunge: 'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=500&q=80',
+  pushup: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80',
+  burpee: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80',
+  run: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&q=80',
+  jump: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&q=80',
+  weight: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80',
+  situp: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80',
+  crunch: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80',
+  knee: 'https://images.unsplash.com/photo-1594882645126-14020914d58d?w=500&q=80',
+  heel: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80',
+  bike: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&q=80'
 };
 
-// 2. Category Pools (Fallback for variety)
-// Minimized to ensure ONLY correct images are shown
+// 2. Category Pools
 const CATEGORY_POOLS = {
   abs: [
-    'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80', // Woman Situps
-    'https://images.unsplash.com/photo-1544367563-12123d8965cd?w=500&q=80', // Yoga Mat / Core
-    'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80', // Floor exercise
+    'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80',
+    'https://images.unsplash.com/photo-1544367563-12123d8965cd?w=500&q=80',
+    'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80',
+    'https://images.unsplash.com/photo-1566241142559-40e1bfc26dd7?w=500&q=80',
+    'https://images.unsplash.com/photo-1594882645126-14020914d58d?w=500&q=80'
   ],
   legs: [
-    'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=500&q=80', // Lunge
-    'https://images.unsplash.com/photo-1574680096141-9c31f2e9c0e5?w=500&q=80', // Squat
-    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=80', // Gym lower
+    'https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=500&q=80',
+    'https://images.unsplash.com/photo-1574680096141-9c31f2e9c0e5?w=500&q=80',
+    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=80',
+    'https://images.unsplash.com/photo-1583454110551-21f2fa2adfcd?w=500&q=80'
   ],
   upper: [
-    'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80', // Dumbbells
-    'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80', // Pushup/Plank
+    'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&q=80',
+    'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80',
+    'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=500&q=80'
   ],
   cardio: [
-    'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&q=80', // Run
+    'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&q=80',
+    'https://images.unsplash.com/photo-1434609976200-bc50bb520b57?w=500&q=80'
   ],
   default: [
-    'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&q=80', // General Gym
+    'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&q=80'
   ]
 };
 
 const getFallbackImage = (name = '', target = '', id = '0') => {
-  const lowerName = name.toLowerCase();
+  const lowerName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
   const lowerTarget = target.toLowerCase();
+  const safeId = String(id || '0');
 
-  // A. Specific Keyword Check (Super High Priority)
+  // A. Specific Keyword Check
   for (const [key, url] of Object.entries(SPECIFIC_IMAGES)) {
     if (lowerName.includes(key)) return url;
   }
@@ -79,7 +88,7 @@ const getFallbackImage = (name = '', target = '', id = '0') => {
   }
 
   // C. Deterministic Randomness
-  const charCodeSum = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + name.length;
+  const charCodeSum = safeId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + lowerName.length;
   return pool[charCodeSum % pool.length];
 };
 
@@ -104,18 +113,6 @@ const ExercisePlan = ({ user }) => {
   // Although backend doesn't use activity for the split logic directly (it uses level), we keep it for consistency with Diet Modal
   const [activity, setActivity] = useState('moderate');
 
-  const modalInputStyle = {
-    width: '100%',
-    padding: '10px 14px',
-    background: '#f8fafc',
-    border: '1px solid #e2e8f0',
-    borderRadius: '12px',
-    fontSize: '0.95rem',
-    color: '#334155',
-    fontWeight: '500',
-    outline: 'none',
-    transition: '0.2s'
-  };
 
   const fetchUserData = useCallback(async () => {
     if (!user?.uid) return;
@@ -180,11 +177,11 @@ const ExercisePlan = ({ user }) => {
         }, { merge: true });
 
         // Update user stats if changed
-        await updateDoc(doc(db, 'users', user.uid), {
+        await setDoc(doc(db, 'users', user.uid), {
           weight: weight,
           age: age, // Save age if new
           gender: gender
-        });
+        }, { merge: true });
       }
     } catch (err) {
       console.error('Error generating plan:', err);
@@ -337,29 +334,28 @@ const ExercisePlan = ({ user }) => {
 
       {showConfigModal && (
         <div className="workout-modal-overlay">
-          <div className="workout-modal-content glass-box" style={{ maxWidth: '600px', width: '95%', maxHeight: '90vh', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div className="modal-header" style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#fff' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#166534', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
-                📊 Start Exercise Plan
+          <div className="workout-modal-content">
+            <div className="modal-header">
+              <h2>
+                <span style={{ fontSize: '1.8rem' }}>📊</span> Start Exercise Plan
               </h2>
               <button className="close-btn" onClick={() => setShowConfigModal(false)}>×</button>
             </div>
 
-            <div className="calc-body" style={{ padding: '1.5rem', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-
+            <div className="calc-body">
               {/* Basic Metrics */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+              <div className="form-grid-3">
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>WEIGHT (KG)</label>
-                  <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="0" style={modalInputStyle} />
+                  <label className="input-label">Weight (kg)</label>
+                  <input type="number" className="modal-input" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="0" />
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>AGE (YRS)</label>
-                  <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="0" style={modalInputStyle} />
+                  <label className="input-label">Age (yrs)</label>
+                  <input type="number" className="modal-input" value={age} onChange={(e) => setAge(e.target.value)} placeholder="0" />
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>GENDER</label>
-                  <select value={gender} onChange={(e) => setGender(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Gender</label>
+                  <select className="modal-input" value={gender} onChange={(e) => setGender(e.target.value)}>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
@@ -367,18 +363,18 @@ const ExercisePlan = ({ user }) => {
               </div>
 
               {/* Configuration */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="form-grid-2">
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>EXPERIENCE</label>
-                  <select value={experience} onChange={(e) => setExperience(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Experience</label>
+                  <select className="modal-input" value={experience} onChange={(e) => setExperience(e.target.value)}>
                     <option value="beginner">Beginner</option>
                     <option value="normal">Intermediate</option>
                     <option value="pro">Pro</option>
                   </select>
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>GOAL</label>
-                  <select value={goal} onChange={(e) => setGoal(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Goal</label>
+                  <select className="modal-input" value={goal} onChange={(e) => setGoal(e.target.value)}>
                     <option value="fat_loss">Fat Loss</option>
                     <option value="muscle_gain">Muscle Gain</option>
                     <option value="body_recomposition">Body Recomposition</option>
@@ -387,8 +383,8 @@ const ExercisePlan = ({ user }) => {
               </div>
 
               <div className="input-group">
-                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>ACTIVITY LEVEL (Optional)</label>
-                <select value={activity} onChange={(e) => setActivity(e.target.value)} style={modalInputStyle}>
+                <label className="input-label">Activity Level (Optional)</label>
+                <select className="modal-input" value={activity} onChange={(e) => setActivity(e.target.value)}>
                   <option value="sedentary">Sedentary</option>
                   <option value="light">Lightly Active</option>
                   <option value="moderate">Moderately Active</option>
@@ -399,8 +395,7 @@ const ExercisePlan = ({ user }) => {
 
               <button
                 onClick={generatePlan}
-                className="nav-pill primary"
-                style={{ width: '100%', padding: '14px', marginTop: '10px', justifyContent: 'center', borderRadius: '12px', fontSize: '1rem' }}
+                className="generate-btn"
                 disabled={loading}
               >
                 {loading ? 'Generating...' : 'Generate My Exercise Plan'}
@@ -413,12 +408,14 @@ const ExercisePlan = ({ user }) => {
 
       {showExerciseModal && (
         <div className="workout-modal-overlay">
-          <div className="workout-modal-content glass-box" style={{ maxWidth: '750px', width: '90%', maxHeight: '85vh', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div className="modal-header" style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9' }}>
-              <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#1e3a8a', margin: 0 }}>🤸 Basic Workout Exercises</h2>
-              <button className="close-btn" onClick={() => setShowExerciseModal(false)} style={{ background: '#f1f5f9', border: 'none', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+          <div className="workout-modal-content" style={{ maxWidth: '850px' }}>
+            <div className="modal-header">
+              <h2>
+                <span style={{ fontSize: '1.8rem' }}>🤸</span> Basic Workout Exercises
+              </h2>
+              <button className="close-btn" onClick={() => setShowExerciseModal(false)}>×</button>
             </div>
-            <div className="calc-body" style={{ padding: '1.5rem', overflowY: 'auto' }}>
+            <div className="calc-body" style={{ background: '#f8fafc' }}>
               <div className="workout-grid-5">
                 {workoutData.basicWorkouts.map((ex, idx) => (
                   <div key={idx} className="lottie-card">

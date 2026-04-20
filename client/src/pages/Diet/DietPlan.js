@@ -350,44 +350,43 @@ const DietPlan = ({ user }) => {
 
       {showCalcModal && (
         <div className="workout-modal-overlay">
-          <div className="workout-modal-content glass-box" style={{ maxWidth: '600px', width: '95%', maxHeight: '90vh', padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div className="modal-header" style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #f1f5f9', background: '#fff' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#166534', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
-                📊 Start Diet Plan
+          <div className="workout-modal-content">
+            <div className="modal-header">
+              <h2>
+                <span style={{ fontSize: '1.8rem' }}>🥗</span> Start Diet Plan
               </h2>
               <button className="close-btn" onClick={() => setShowCalcModal(false)}>×</button>
             </div>
 
-            <div className="calc-body" style={{ padding: '1.5rem', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-
+            <div className="calc-body">
               {/* Basic Metrics */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+              <div className="form-grid-3">
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>WEIGHT (KG)</label>
-                  <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="0" style={modalInputStyle} />
+                  <label className="input-label">Weight (kg)</label>
+                  <input type="number" className="modal-input" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="e.g. 70" />
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>HEIGHT (CM)</label>
-                  <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} placeholder="0" style={modalInputStyle} />
+                  <label className="input-label">Height (cm)</label>
+                  <input type="number" className="modal-input" value={height} onChange={(e) => setHeight(e.target.value)} placeholder="e.g. 175" />
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>AGE (YRS)</label>
-                  <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="0" style={modalInputStyle} />
+                  <label className="input-label">Age (yrs)</label>
+                  <input type="number" className="modal-input" value={age} onChange={(e) => setAge(e.target.value)} placeholder="e.g. 25" />
                 </div>
               </div>
 
               {/* Selections Group 1 */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="form-grid-2">
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>GENDER</label>
-                  <select value={gender} onChange={(e) => setGender(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Gender</label>
+                  <select className="modal-input" value={gender} onChange={(e) => setGender(e.target.value)}>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>GOAL TYPE</label>
-                  <select value={goal} onChange={(e) => setGoal(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Goal Type</label>
+                  <select className="modal-input" value={goal} onChange={(e) => setGoal(e.target.value)}>
                     <option value="fatloss">Fat Loss</option>
                     <option value="recomp">Body Recomposition</option>
                     <option value="muscle">Muscle Gain</option>
@@ -396,10 +395,10 @@ const DietPlan = ({ user }) => {
               </div>
 
               {/* Selections Group 2 */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="form-grid-2">
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>ACTIVITY LEVEL</label>
-                  <select value={activity} onChange={(e) => setActivity(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Activity Level</label>
+                  <select className="modal-input" value={activity} onChange={(e) => setActivity(e.target.value)}>
                     <option value="sedentary">Sedentary</option>
                     <option value="light">Lightly Active</option>
                     <option value="moderate">Moderately Active</option>
@@ -408,8 +407,8 @@ const DietPlan = ({ user }) => {
                   </select>
                 </div>
                 <div className="input-group">
-                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '6px', display: 'block' }}>DIET PREFERENCE</label>
-                  <select value={dietPreference} onChange={(e) => setDietPreference(e.target.value)} style={modalInputStyle}>
+                  <label className="input-label">Diet Preference</label>
+                  <select className="modal-input" value={dietPreference} onChange={(e) => setDietPreference(e.target.value)}>
                     <option value="vegetarian">Vegetarian</option>
                     <option value="non-vegetarian">Non-Vegetarian</option>
                   </select>
@@ -418,24 +417,13 @@ const DietPlan = ({ user }) => {
 
               {/* Health Conditions Multi-Select */}
               <div className="input-group">
-                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '8px', display: 'block' }}>HEALTH CONDITIONS</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                <label className="input-label">Health Conditions</label>
+                <div className="condition-tags">
                   {['None', 'BP', 'Sugar', 'Cholesterol', 'Thyroid'].map((cond) => (
                     <button
                       key={cond}
                       onClick={() => handleConditionToggle(cond)}
-                      style={{
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.85rem',
-                        fontWeight: 600,
-                        border: '1px solid',
-                        borderColor: healthConditions.includes(cond) ? '#059669' : '#e2e8f0',
-                        background: healthConditions.includes(cond) ? '#ecfdf5' : '#fff',
-                        color: healthConditions.includes(cond) ? '#059669' : '#64748b',
-                        cursor: 'pointer',
-                        transition: '0.2s'
-                      }}
+                      className={`condition-tag ${healthConditions.includes(cond) ? 'active' : ''}`}
                     >
                       {cond}
                     </button>
@@ -445,11 +433,10 @@ const DietPlan = ({ user }) => {
 
               <button
                 onClick={startDietPlan}
-                className="nav-pill primary"
-                style={{ width: '100%', padding: '14px', marginTop: '10px', justifyContent: 'center', borderRadius: '12px', fontSize: '1rem' }}
+                className="generate-btn"
                 disabled={loading}
               >
-                {loading ? 'Calculations...' : 'Generate My Diet Plan'}
+                {loading ? 'Calculating...' : 'Generate My Diet Plan'}
               </button>
 
             </div>

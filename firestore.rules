@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allows users to manage their own profile and plans
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    match /plans/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    // Allows logging of daily progress (water, sleep, etc.)
+    match /progress/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
